@@ -3,7 +3,7 @@ import ss from '../../App.module.css'
 
 export const TestPage = () => {
   return (
-    <div className={s.testPage + ' ' + ss.os}>
+    <div className={s.testPage + ' ' + ss.os + ' ' + ss.cp}>
       <p>Test page</p>
     </div>
   )

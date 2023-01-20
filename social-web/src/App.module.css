@@ -1,7 +1,7 @@
 .app {
   width: 1000px;
   margin: 0 auto;
-  background-color: #ddd;
+  background-color: yellow;
   min-height: 100%;
 
   display: grid;
@@ -19,4 +19,9 @@
 .os {
   border: 1px solid fuchsia;
   padding: 10px;
+}
+
+.cp {
+  background-color: white;
+  height: 100%;
 }

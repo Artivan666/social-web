@@ -1,0 +1,17 @@
+.weather {
+  width: 150px;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.header {
+  background-color: aqua;
+  text-align: center;
+  height: 25px;
+  padding: 5px;
+}
+
+.content {
+  background-color: white;
+  padding: 5px;
+}
