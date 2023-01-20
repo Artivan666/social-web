@@ -1,0 +1,5 @@
+.header {
+  background-color: #ddd;
+  grid-area: h;
+  display: flex;
+}

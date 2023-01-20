@@ -1,0 +1,22 @@
+.app {
+  width: 1000px;
+  margin: 0 auto;
+  background-color: #ddd;
+  min-height: 100%;
+
+  display: grid;
+  grid-template-areas: 'h h' 's c' 'f f';
+  grid-template-rows: 100px 1fr 50px;
+  grid-template-columns: 2fr 10fr;
+}
+
+.content {
+  grid-area: c;
+}
+
+/* overal styles */
+
+.os {
+  border: 1px solid fuchsia;
+  padding: 10px;
+}
