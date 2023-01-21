@@ -14,7 +14,13 @@ export const Profile = (props) => {
       </div>
       <div>User name</div>
       <div>User status</div>
-      <Posts posts={props.posts} />
+      <Posts
+        posts={props.posts}
+        newPostText={props.newPostText}
+        dispatch={props.dispatch}
+        updateNewPostText={props.updateNewPostText}
+        addNewPost={props.addNewPost}
+      />
     </div>
   )
 }

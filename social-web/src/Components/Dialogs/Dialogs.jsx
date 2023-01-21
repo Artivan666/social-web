@@ -1,13 +1,14 @@
 import s from './Dialogs.module.css'
 import ss from '../../App.module.css'
 import { NavLink } from 'react-router-dom'
+import { addNewMessage, updateNewMessageText } from '../../redux/state'
 
 export const Dialogs = (props) => {
   const setActive = ({ isActive }) => (isActive ? s.active : '')
 
   const dialogs = props.dialogs.map((d) => (
     <div
-      key={d.key}
+      key={d.id}
       className={s.item}
     >
       <NavLink
@@ -21,19 +22,37 @@ export const Dialogs = (props) => {
 
   const messages = props.messages.map((m) => <div key={m.id}>{m.message}</div>)
 
+  const onChangeMessage = (e) => {
+    props.dispatch(updateNewMessageText(e.target.value))
+  }
+
+  const onSendMessage = () => {
+    props.dispatch(addNewMessage())
+  }
+
   return (
     <div className={s.dialogs + ' ' + ss.os + ' ' + ss.cp}>
       <p>Dialogs</p>
       <div className={s.newMessageBlock}>
         <div>
           <input
+            onChange={(e) => {
+              onChangeMessage(e)
+            }}
+            value={props.newMessageText}
             type="text"
             name=""
             id=""
           />
         </div>
         <div>
-          <button>Send</button>
+          <button
+            onClick={() => {
+              onSendMessage()
+            }}
+          >
+            Send
+          </button>
         </div>
       </div>
       <div className={s.messagesList}>

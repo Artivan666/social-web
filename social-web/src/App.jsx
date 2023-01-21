@@ -23,18 +23,22 @@ export const App = (props) => {
           />
           <Route
             path="/profile"
-            element={<Profile posts={props.posts} />}
+            element={
+              <Profile
+                posts={props.state.profilePage.posts}
+                newPostText={props.state.profilePage.newPostText}
+                dispatch={props.dispatch}
+              />
+            }
           />
-          {/* <Route
-            path="/dialogs/"
-            element={<Dialogs />}
-          /> */}
           <Route
             path="/dialogs/*"
             element={
               <Dialogs
-                dialogs={props.dialogs}
-                messages={props.messages}
+                dialogs={props.state.dialogsPage.dialogs}
+                messages={props.state.dialogsPage.messages}
+                newMessageText={props.state.dialogsPage.newMessageText}
+                dispatch={props.dispatch}
               />
             }
           />
