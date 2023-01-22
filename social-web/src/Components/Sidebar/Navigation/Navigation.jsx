@@ -34,6 +34,14 @@ export const Navigation = () => {
       </div>
       <div className={s.item}>
         <NavLink
+          to="/users"
+          className={setActive}
+        >
+          Users
+        </NavLink>
+      </div>
+      <div className={s.item}>
+        <NavLink
           to="/video"
           className={setActive}
         >

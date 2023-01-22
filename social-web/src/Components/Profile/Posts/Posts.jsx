@@ -2,17 +2,16 @@ import s from './Posts.module.css'
 import ss from '../../../App.module.css'
 import { Post } from './Post/Post'
 import React from 'react'
-import { addNewPost, updateNewPostText } from '../../../redux/state'
 
 export const Posts = (props) => {
   const ref = React.createRef()
 
   const onChangePost = () => {
-    props.dispatch(updateNewPostText(ref.current.value))
+    props.changePost(ref.current.value)
   }
 
   const onAddPost = () => {
-    props.dispatch(addNewPost())
+    props.addPost()
   }
 
   const posts = props.posts.map((p) => (
@@ -23,8 +22,11 @@ export const Posts = (props) => {
     />
   ))
 
+  console.log('render posts')
+
   return (
     <div className={s.posts + ' ' + ss.os}>
+      <TestComponent />
       <div className={s.post_box}>
         <div className={s.newPostBlock}>
           <div>
@@ -50,6 +52,15 @@ export const Posts = (props) => {
         </div>
       </div>
       <div className={s.post_list}>{posts}</div>
+    </div>
+  )
+}
+
+const TestComponent = (props) => {
+  console.log('render test')
+  return (
+    <div>
+      <p>Test component</p>
     </div>
   )
 }

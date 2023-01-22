@@ -1,0 +1,12 @@
+.user {
+  margin-bottom: 10px;
+}
+
+.user_photo {
+  border: 1px solid black;
+  width: 100px;
+}
+
+.user_photo img {
+  width: 98px;
+}

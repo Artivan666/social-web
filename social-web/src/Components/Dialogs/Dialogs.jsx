@@ -1,7 +1,10 @@
 import s from './Dialogs.module.css'
 import ss from '../../App.module.css'
 import { NavLink } from 'react-router-dom'
-import { addNewMessage, updateNewMessageText } from '../../redux/state'
+import {
+  addNewMessage,
+  updateNewMessageText,
+} from '../../redux/dialogs-reducer'
 
 export const Dialogs = (props) => {
   const setActive = ({ isActive }) => (isActive ? s.active : '')
@@ -23,12 +26,14 @@ export const Dialogs = (props) => {
   const messages = props.messages.map((m) => <div key={m.id}>{m.message}</div>)
 
   const onChangeMessage = (e) => {
-    props.dispatch(updateNewMessageText(e.target.value))
+    props.changeMessage(e.target.value)
   }
 
   const onSendMessage = () => {
-    props.dispatch(addNewMessage())
+    props.sendMessage()
   }
+
+  console.log('render dialogs')
 
   return (
     <div className={s.dialogs + ' ' + ss.os + ' ' + ss.cp}>

@@ -1,5 +1,4 @@
 import s from './App.module.css'
-import { Dialogs } from './Components/Dialogs/Dialogs'
 import { Footer } from './Components/Footer/Footer'
 import { Header } from './Components/Header/Header'
 import { Main } from './Components/Main/Main'
@@ -9,6 +8,9 @@ import { TestPage } from './Components/TestPage/TestPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ErrorPage } from './Components/ErrorPage/ErrorPage'
 import { Video } from './Components/Video/Video'
+import { DialogsContainer } from './Components/Dialogs/DialogsContainer'
+import { Users } from './Components/Users/Users'
+import { UsersContainer } from './Components/Users/UsersContainer'
 
 export const App = (props) => {
   return (
@@ -23,24 +25,15 @@ export const App = (props) => {
           />
           <Route
             path="/profile"
-            element={
-              <Profile
-                posts={props.state.profilePage.posts}
-                newPostText={props.state.profilePage.newPostText}
-                dispatch={props.dispatch}
-              />
-            }
+            element={<Profile />}
           />
           <Route
             path="/dialogs/*"
-            element={
-              <Dialogs
-                dialogs={props.state.dialogsPage.dialogs}
-                messages={props.state.dialogsPage.messages}
-                newMessageText={props.state.dialogsPage.newMessageText}
-                dispatch={props.dispatch}
-              />
-            }
+            element={<DialogsContainer />}
+          />
+          <Route
+            path="/users"
+            element={<UsersContainer />}
           />
           <Route
             path="/video"
