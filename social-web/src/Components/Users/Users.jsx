@@ -1,19 +1,8 @@
 import s from './Users.module.css'
 import ss from '../../App.module.css'
 import { User } from './User/User'
-import axios from 'axios'
 
 export const Users = (props) => {
-  const onGetUsers = () => {
-    if (!props.users.length) {
-      axios
-        .get('https://social-network.samuraijs.com/api/1.0/users?page=224')
-        .then((res) => {
-          props.setUsers(res.data.items)
-        })
-    }
-  }
-
   const users = props.users.map((u) => (
     <User
       key={u.id}
@@ -26,16 +15,32 @@ export const Users = (props) => {
     />
   ))
 
+  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
+
+  const pages = []
+
+  for (let i = 1; i <= pagesCount; i++) {
+    pages.push(i)
+  }
+
+  const onChangePage = (pageNumber) => {
+    props.changeCurrentPage(pageNumber)
+  }
+
   return (
     <div className={s.users + ' ' + ss.os + ' ' + ss.cp}>
       <div>
-        <button
-          onClick={() => {
-            onGetUsers()
-          }}
-        >
-          Get users
-        </button>
+        {pages.map((p) => (
+          <button
+            key={p}
+            className={props.currentPage === p ? s.selectedPage : ''}
+            onClick={() => {
+              onChangePage(p)
+            }}
+          >
+            {p}
+          </button>
+        ))}
       </div>
       {users}
     </div>
