@@ -1,6 +1,7 @@
 import s from './User.module.css'
 import ss from '../../../App.module.css'
 import img from '../../../img/avatar.jpg'
+import { NavLink } from 'react-router-dom'
 
 export const User = (props) => {
   const onFollow = (userId) => {
@@ -14,10 +15,9 @@ export const User = (props) => {
   return (
     <div className={s.user + ' ' + ss.os}>
       <div className={s.user_photo}>
-        <img
-          src={props.photos.small ? props.photos.small : img}
-          alt=""
-        />
+        <NavLink to={`/profile/${props.userId}`}>
+          <img src={props.photos.small ? props.photos.small : img} alt="" />
+        </NavLink>
       </div>
       <div>{props.userName}</div>
       <div>User Status</div>

@@ -8,11 +8,19 @@ export const Profile = (props) => {
     <div className={s.profile + ' ' + ss.os + ' ' + ss.cp}>
       <div className={s.userPhoto}>
         <img
-          src={img}
+          src={
+            props.userProfile.photos.large
+              ? props.userProfile.photos.large
+              : img
+          }
           alt="image"
         />
       </div>
-      <div>User name</div>
+      <div>{props.userProfile.fullName}</div>
+      <div>
+        <b>About me: </b>
+        {props.userProfile.aboutMe}
+      </div>
       <div>User status</div>
       <PostsContainer />
     </div>

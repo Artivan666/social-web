@@ -11,6 +11,7 @@ import { Video } from './Components/Video/Video'
 import { DialogsContainer } from './Components/Dialogs/DialogsContainer'
 import { Users } from './Components/Users/Users'
 import { UsersContainer } from './Components/Users/UsersContainer'
+import { ProfileContainer } from './Components/Profile/ProfileContainer'
 
 export const App = (props) => {
   return (
@@ -19,34 +20,13 @@ export const App = (props) => {
       <Sidebar />
       <div className={s.content}>
         <Routes>
-          <Route
-            path=""
-            element={<Main />}
-          />
-          <Route
-            path="/profile"
-            element={<Profile />}
-          />
-          <Route
-            path="/dialogs/*"
-            element={<DialogsContainer />}
-          />
-          <Route
-            path="/users"
-            element={<UsersContainer />}
-          />
-          <Route
-            path="/video"
-            element={<Video />}
-          />
-          <Route
-            path="/test_page"
-            element={<TestPage />}
-          />
-          <Route
-            path="*"
-            element={<ErrorPage />}
-          />
+          <Route path="" element={<Main />} />
+          <Route path="/profile" element={<ProfileContainer />} />
+          <Route path="/dialogs/*" element={<DialogsContainer />} />
+          <Route path="/users" element={<UsersContainer />} />
+          <Route path="/video" element={<Video />} />
+          <Route path="/test_page" element={<TestPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Routes>
       </div>
       <Footer />

@@ -15,14 +15,8 @@ export const Posts = (props) => {
   }
 
   const posts = props.posts.map((p) => (
-    <Post
-      key={p.id}
-      name={p.name}
-      message={p.message}
-    />
+    <Post key={p.id} name={p.name} message={p.message} />
   ))
-
-  console.log('render posts')
 
   return (
     <div className={s.posts + ' ' + ss.os}>
@@ -57,7 +51,6 @@ export const Posts = (props) => {
 }
 
 const TestComponent = (props) => {
-  console.log('render test')
   return (
     <div>
       <p>Test component</p>
