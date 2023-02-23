@@ -18,17 +18,14 @@ function withRouter(Component) {
 }
 
 class ProfileContainerAPI extends React.Component {
-  userId = this.props.router.params.userId
-  if(userId) {
-    userId = 2
-  }
-
   componentDidMount() {
-    console.log(this.userId)
+    let userId = this.props.router.params.userId
+    if (userId == undefined) {
+      userId = 2
+    }
+
     axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/profile/${this.userId}`
-      )
+      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
       .then((res) => {
         this.props.setUserProfile(res.data)
       })
@@ -37,6 +34,7 @@ class ProfileContainerAPI extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.router.params.userId !== prevProps.router.params.userId) {
       console.log('componentDidUpdate')
+      const userId = this.props.router.params.userId
       axios
         .get(`https://social-network.samuraijs.com/api/1.0/profile/2`)
         .then((res) => {
