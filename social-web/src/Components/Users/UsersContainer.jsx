@@ -10,73 +10,44 @@ import {
 import { Users } from './Users'
 import React from 'react'
 import axios from 'axios'
+import { getUsers, usersAPI } from '../../api/api'
 
 class UsersContainerAPI extends React.Component {
   componentDidMount() {
     this.props.setToggleIsFetching(true)
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${this.props.currentPage}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
+    usersAPI
+      .getUsers(this.props.pageSize, this.props.currentPage)
+      .then((data) => {
         this.props.setToggleIsFetching(false)
-        this.props.setUsers(res.data.items)
-        this.props.setTotalUsersCount(res.data.totalCount)
+        this.props.setUsers(data.items)
+        this.props.setTotalUsersCount(data.totalCount)
       })
   }
 
   changeCurrentPage = (pageNumber) => {
     this.props.setToggleIsFetching(true)
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.pageSize}&page=${pageNumber}`,
-        {
-          withCredentials: true,
-        }
-      )
-      .then((res) => {
-        this.props.setToggleIsFetching(false)
-        this.props.setUsers(res.data.items)
-        this.props.setTotalUsersCount(res.data.totalCount)
-        this.props.setCurrentPage(pageNumber)
-      })
+    usersAPI.getUsers(this.props.pageSize, pageNumber).then((data) => {
+      this.props.setToggleIsFetching(false)
+      this.props.setUsers(data.items)
+      this.props.setTotalUsersCount(data.totalCount)
+      this.props.setCurrentPage(pageNumber)
+    })
   }
 
   subscribeToUser = (userId) => {
-    axios
-      .post(
-        `https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
-        {},
-        {
-          withCredentials: true,
-          headers: {
-            'API-KEY': 'e5f2c05d-3abf-4136-95a0-734ede57770a',
-          },
-        }
-      )
-      .then((res) => {
-        if (res.data.resultCode === 0) {
-          this.props.follow(userId)
-        }
-      })
+    usersAPI.subscribe(userId).then((res) => {
+      if (res.data.resultCode === 0) {
+        this.props.follow(userId)
+      }
+    })
   }
 
   unsubscribeToUser = (userId) => {
-    axios
-      .delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`, {
-        withCredentials: true,
-        headers: {
-          'API-KEY': 'e5f2c05d-3abf-4136-95a0-734ede57770a',
-        },
-      })
-      .then((res) => {
-        if (res.data.resultCode === 0) {
-          this.props.unfollow(userId)
-        }
-      })
+    usersAPI.unsubscribe(userId).then((res) => {
+      if (res.data.resultCode === 0) {
+        this.props.unfollow(userId)
+      }
+    })
   }
 
   render() {
