@@ -40,7 +40,6 @@ class UsersContainerAPI extends React.Component {
   }
 
   render() {
-    console.log(this.props.isFetching)
     return (
       <>
         {this.props.isFetching ? <div>Loading...</div> : null}

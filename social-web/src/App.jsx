@@ -21,6 +21,7 @@ export const App = (props) => {
       <div className={s.content}>
         <Routes>
           <Route path="" element={<Main />} />
+          <Route path="/profile/:userId" element={<ProfileContainer />} />
           <Route path="/profile" element={<ProfileContainer />} />
           <Route path="/dialogs/*" element={<DialogsContainer />} />
           <Route path="/users" element={<UsersContainer />} />
