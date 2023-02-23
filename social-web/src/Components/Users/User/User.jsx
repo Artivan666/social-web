@@ -23,6 +23,7 @@ export const User = (props) => {
       <div>User Status</div>
       {props.followed ? (
         <button
+          disabled={props.subscribeInProgress.some((u) => u === props.userId)}
           onClick={() => {
             onUnfollow(props.userId)
           }}
@@ -34,6 +35,7 @@ export const User = (props) => {
       )}
       {!props.followed ? (
         <button
+          disabled={props.subscribeInProgress.some((u) => u === props.userId)}
           onClick={() => {
             onFollow(props.userId)
           }}

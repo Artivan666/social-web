@@ -6,6 +6,7 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const SUBSCRIBE = 'SUBSCRIBE'
 const UNSUBSCRIBE = 'UNSUBSCRIBE'
+const SET_SUBSCRIBE_IN_PROGRESS = 'SET_SUBSCRIBE_IN_PROGRESS'
 
 const initialState = {
   users: [],
@@ -13,6 +14,7 @@ const initialState = {
   totalUsersCount: 0,
   currentPage: 1,
   isFetching: false,
+  subscribeInProgress: [],
 }
 
 export const usersReducer = (state = initialState, action) => {
@@ -63,6 +65,16 @@ export const usersReducer = (state = initialState, action) => {
         isFetching: action.isFetching,
       }
 
+    case SET_SUBSCRIBE_IN_PROGRESS:
+      return {
+        ...state,
+        subscribeInProgress: action.value
+          ? [...state.subscribeInProgress, action.userId]
+          : state.subscribeInProgress.filter(
+              (userId) => userId != action.userId
+            ),
+      }
+
     default:
       return state
   }
@@ -107,4 +119,10 @@ export const subscibe = (userId) => ({
 export const unsubscribe = (userId) => ({
   type: UNSUBSCRIBE,
   userId,
+})
+
+export const setSubscribeInProgress = (userId, value) => ({
+  type: SET_SUBSCRIBE_IN_PROGRESS,
+  userId,
+  value,
 })

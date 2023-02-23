@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import {
   follow,
   setCurrentPage,
+  setSubscribeInProgress,
   setToggleIsFetching,
   setTotalUsersCount,
   setUsers,
@@ -35,18 +36,22 @@ class UsersContainerAPI extends React.Component {
   }
 
   subscribeToUser = (userId) => {
+    this.props.setSubscribeInProgress(userId, true)
     usersAPI.subscribe(userId).then((res) => {
       if (res.data.resultCode === 0) {
         this.props.follow(userId)
       }
+      this.props.setSubscribeInProgress(userId, false)
     })
   }
 
   unsubscribeToUser = (userId) => {
+    this.props.setSubscribeInProgress(userId, true)
     usersAPI.unsubscribe(userId).then((res) => {
       if (res.data.resultCode === 0) {
         this.props.unfollow(userId)
       }
+      this.props.setSubscribeInProgress(userId, false)
     })
   }
 
@@ -71,6 +76,7 @@ const mapStateToProps = (state) => ({
   totalUsersCount: state.usersPage.totalUsersCount,
   currentPage: state.usersPage.currentPage,
   isFetching: state.usersPage.isFetching,
+  subscribeInProgress: state.usersPage.subscribeInProgress,
 })
 
 export const UsersContainer = connect(mapStateToProps, {
@@ -80,4 +86,5 @@ export const UsersContainer = connect(mapStateToProps, {
   setTotalUsersCount,
   setCurrentPage,
   setToggleIsFetching,
+  setSubscribeInProgress,
 })(UsersContainerAPI)

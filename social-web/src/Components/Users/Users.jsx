@@ -12,6 +12,7 @@ export const Users = (props) => {
       followed={u.followed}
       subscribeToUser={props.subscribeToUser}
       unsubscribeToUser={props.unsubscribeToUser}
+      subscribeInProgress={props.subscribeInProgress}
     />
   ))
 
