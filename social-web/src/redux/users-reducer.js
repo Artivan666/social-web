@@ -4,6 +4,8 @@ const UNFOLLOW = 'UNFOLLOW'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const SUBSCRIBE = 'SUBSCRIBE'
+const UNSUBSCRIBE = 'UNSUBSCRIBE'
 
 const initialState = {
   users: [],
@@ -95,4 +97,14 @@ export const setCurrentPage = (currentPage) => ({
 export const setToggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
+})
+
+export const subscibe = (userId) => ({
+  type: SUBSCRIBE,
+  userId,
+})
+
+export const unsubscribe = (userId) => ({
+  type: UNSUBSCRIBE,
+  userId,
 })

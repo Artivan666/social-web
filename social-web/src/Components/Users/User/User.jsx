@@ -5,11 +5,11 @@ import { NavLink } from 'react-router-dom'
 
 export const User = (props) => {
   const onFollow = (userId) => {
-    props.follow(userId)
+    props.subscribeToUser(userId)
   }
 
   const onUnfollow = (userId) => {
-    props.unfollow(userId)
+    props.unsubscribeToUser(userId)
   }
 
   return (

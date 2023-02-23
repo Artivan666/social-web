@@ -10,8 +10,8 @@ export const Users = (props) => {
       userName={u.name}
       photos={u.photos}
       followed={u.followed}
-      follow={props.follow}
-      unfollow={props.unfollow}
+      subscribeToUser={props.subscribeToUser}
+      unsubscribeToUser={props.unsubscribeToUser}
     />
   ))
 
