@@ -2,6 +2,7 @@ import s from './Profile.module.css'
 import ss from '../../App.module.css'
 import img from '../../img/avatar.jpg'
 import { PostsContainer } from './Posts/PostsContainer'
+import { UserStatus } from './UserStatus/UserStatus'
 
 export const Profile = (props) => {
   return (
@@ -21,7 +22,10 @@ export const Profile = (props) => {
         <b>About me: </b>
         {props.userProfile.aboutMe}
       </div>
-      <div>User status</div>
+      <UserStatus
+        userStatus={props.userStatus}
+        updateUserStatus={props.updateUserStatus}
+      />
       <PostsContainer />
     </div>
   )

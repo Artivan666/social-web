@@ -1,8 +1,11 @@
 import { usersAPI } from '../api/api'
 
+const SET_INITIALIZATION = 'SET_INITIALIZATION'
+
 const SET_USER_DATA = 'SET_USER_DATA'
 
 const initialState = {
+  initialization: false,
   id: null,
   email: null,
   login: null,
@@ -18,6 +21,12 @@ export const authReducer = (state = initialState, action) => {
         isAuth: true,
       }
 
+    case SET_INITIALIZATION:
+      return {
+        ...state,
+        initialization: true,
+      }
+
     default:
       return state
   }
@@ -30,6 +39,10 @@ export const setUserData = (userData) => ({
   userData,
 })
 
+const setInitialization = () => ({
+  type: SET_INITIALIZATION,
+})
+
 // Thunk
 
 export const getUserData = () => (dispatch) => {
@@ -37,5 +50,7 @@ export const getUserData = () => (dispatch) => {
     if (res.data.resultCode === 0) {
       dispatch(setUserData(res.data.data))
     }
+    // initialization APP
+    dispatch(setInitialization())
   })
 }

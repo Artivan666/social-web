@@ -23,6 +23,18 @@ export const usersAPI = {
     })
   },
 
+  getUserStatus(userId) {
+    return instance.get(`profile/status/${userId}`).then((res) => {
+      if (res.status === 200) {
+        return res.data
+      }
+    })
+  },
+
+  updateUserStatus(userStatus) {
+    return instance.put(`profile/status/`, { status: userStatus })
+  },
+
   getUsers(pageSize, pageNumber) {
     return instance
       .get(`users?count=${pageSize}&page=${pageNumber}`)

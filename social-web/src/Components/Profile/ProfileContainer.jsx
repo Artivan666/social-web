@@ -1,9 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import axios from 'axios'
 import { Profile } from './Profile'
-import { getUserProfile } from '../../redux/profile-reducer'
+import {
+  getUserProfile,
+  getUserStatus,
+  updateUserStatus,
+} from '../../redux/profile-reducer'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 // wrapper to use react router's v6 hooks in class component(to use HOC pattern, like in router v5)
 function withRouter(Component) {
@@ -21,17 +25,18 @@ class ProfileContainerAPI extends React.Component {
   componentDidMount() {
     let userId = this.props.router.params.userId
     if (userId == undefined) {
-      userId = 2
+      userId = 25328
     }
     console.log(`componentDidMount userId: ${userId}`)
     this.props.getUserProfile(userId)
+    this.props.getUserStatus(userId)
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.router.params.userId !== prevProps.router.params.userId) {
       let userId = this.props.router.params.userId
       if (userId == undefined) {
-        userId = 2
+        userId = 25328
       }
       console.log(`componentDidUpdate userId: ${userId}`)
       this.props.getUserProfile(userId)
@@ -39,15 +44,32 @@ class ProfileContainerAPI extends React.Component {
   }
 
   render() {
+    if (this.props.initialization) {
+      if (!this.props.isAuth) {
+        return <Navigate to="/login" />
+      }
+    }
+
     if (!this.props.userProfile) return <div>Loading...</div>
-    return <Profile {...this.props} userProfile={this.props.userProfile} />
+    return (
+      <Profile
+        {...this.props}
+        userProfile={this.props.userProfile}
+        updateUserStatus={this.props.updateUserStatus}
+      />
+    )
   }
 }
 
 const mapStateToProps = (state) => ({
   userProfile: state.profilePage.userProfile,
+  isAuth: state.auth.isAuth,
+  initialization: state.auth.initialization,
+  userStatus: state.profilePage.userStatus,
 })
 
-export const ProfileContainer = connect(mapStateToProps, { getUserProfile })(
-  withRouter(ProfileContainerAPI)
-)
+export const ProfileContainer = connect(mapStateToProps, {
+  getUserProfile,
+  getUserStatus,
+  updateUserStatus,
+})(withRouter(ProfileContainerAPI))
