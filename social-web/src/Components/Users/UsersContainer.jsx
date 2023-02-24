@@ -1,58 +1,29 @@
 import { connect } from 'react-redux'
 import {
-  follow,
-  setCurrentPage,
+  getUsers,
   setSubscribeInProgress,
-  setToggleIsFetching,
-  setTotalUsersCount,
-  setUsers,
-  unfollow,
+  subscribe,
+  unsubscribe,
 } from '../../redux/users-reducer'
 import { Users } from './Users'
 import React from 'react'
-import axios from 'axios'
-import { getUsers, usersAPI } from '../../api/api'
+import { usersAPI } from '../../api/api'
 
 class UsersContainerAPI extends React.Component {
   componentDidMount() {
-    this.props.setToggleIsFetching(true)
-    usersAPI
-      .getUsers(this.props.pageSize, this.props.currentPage)
-      .then((data) => {
-        this.props.setToggleIsFetching(false)
-        this.props.setUsers(data.items)
-        this.props.setTotalUsersCount(data.totalCount)
-      })
+    this.props.getUsers(this.props.pageSize, this.props.currentPage)
   }
 
   changeCurrentPage = (pageNumber) => {
-    this.props.setToggleIsFetching(true)
-    usersAPI.getUsers(this.props.pageSize, pageNumber).then((data) => {
-      this.props.setToggleIsFetching(false)
-      this.props.setUsers(data.items)
-      this.props.setTotalUsersCount(data.totalCount)
-      this.props.setCurrentPage(pageNumber)
-    })
+    this.props.getUsers(this.props.pageSize, pageNumber)
   }
 
   subscribeToUser = (userId) => {
-    this.props.setSubscribeInProgress(userId, true)
-    usersAPI.subscribe(userId).then((res) => {
-      if (res.data.resultCode === 0) {
-        this.props.follow(userId)
-      }
-      this.props.setSubscribeInProgress(userId, false)
-    })
+    this.props.subscribe(userId)
   }
 
   unsubscribeToUser = (userId) => {
-    this.props.setSubscribeInProgress(userId, true)
-    usersAPI.unsubscribe(userId).then((res) => {
-      if (res.data.resultCode === 0) {
-        this.props.unfollow(userId)
-      }
-      this.props.setSubscribeInProgress(userId, false)
-    })
+    this.props.unsubscribe(userId)
   }
 
   render() {
@@ -80,11 +51,8 @@ const mapStateToProps = (state) => ({
 })
 
 export const UsersContainer = connect(mapStateToProps, {
-  setUsers,
-  follow,
-  unfollow,
-  setTotalUsersCount,
-  setCurrentPage,
-  setToggleIsFetching,
+  getUsers,
   setSubscribeInProgress,
+  subscribe,
+  unsubscribe,
 })(UsersContainerAPI)

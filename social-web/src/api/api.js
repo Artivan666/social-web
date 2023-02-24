@@ -13,6 +13,16 @@ export const usersAPI = {
     return instance.get(`auth/me`)
   },
 
+  getUserProfile(userId) {
+    return instance.get(`profile/${userId}`).then((res) => {
+      if (res.status === 200) {
+        return res.data
+      } else {
+        console.log('api error in getUserProfile')
+      }
+    })
+  },
+
   getUsers(pageSize, pageNumber) {
     return instance
       .get(`users?count=${pageSize}&page=${pageNumber}`)

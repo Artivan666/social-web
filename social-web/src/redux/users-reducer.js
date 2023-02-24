@@ -1,11 +1,11 @@
+import { usersAPI } from '../api/api'
+
 const SET_USERS = 'SET_USERS'
-const FOLLOW = 'FOLLOW'
-const UNFOLLOW = 'UNFOLLOW'
+const SUBSCRIBE = 'SUBSCRIBE'
+const UNSUBSCRIBE = 'UNSUBSCRIBE'
 const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const SUBSCRIBE = 'SUBSCRIBE'
-const UNSUBSCRIBE = 'UNSUBSCRIBE'
 const SET_SUBSCRIBE_IN_PROGRESS = 'SET_SUBSCRIBE_IN_PROGRESS'
 
 const initialState = {
@@ -25,7 +25,7 @@ export const usersReducer = (state = initialState, action) => {
         users: [...action.users],
       }
 
-    case FOLLOW:
+    case SUBSCRIBE:
       return {
         ...state,
         users: state.users.map((u) => {
@@ -36,7 +36,7 @@ export const usersReducer = (state = initialState, action) => {
         }),
       }
 
-    case UNFOLLOW:
+    case UNSUBSCRIBE:
       return {
         ...state,
         users: state.users.map((u) => {
@@ -88,11 +88,11 @@ export const setUsers = (users) => ({
 })
 
 export const follow = (userId) => ({
-  type: FOLLOW,
+  type: SUBSCRIBE,
   userId,
 })
 export const unfollow = (userId) => ({
-  type: UNFOLLOW,
+  type: UNSUBSCRIBE,
   userId,
 })
 
@@ -111,12 +111,12 @@ export const setToggleIsFetching = (isFetching) => ({
   isFetching,
 })
 
-export const subscibe = (userId) => ({
+export const subscribeSuccess = (userId) => ({
   type: SUBSCRIBE,
   userId,
 })
 
-export const unsubscribe = (userId) => ({
+export const unsubscribeSuccess = (userId) => ({
   type: UNSUBSCRIBE,
   userId,
 })
@@ -126,3 +126,35 @@ export const setSubscribeInProgress = (userId, value) => ({
   userId,
   value,
 })
+
+// THUNK
+
+export const getUsers = (pageSize, pageNumber) => (dispatch) => {
+  dispatch(setToggleIsFetching(true))
+  usersAPI.getUsers(pageSize, pageNumber).then((data) => {
+    dispatch(setToggleIsFetching(false))
+    dispatch(setUsers(data.items))
+    dispatch(setCurrentPage(pageNumber))
+    dispatch(setTotalUsersCount(data.totalCount))
+  })
+}
+
+export const subscribe = (userId) => (dispatch) => {
+  dispatch(setSubscribeInProgress(userId, true))
+  usersAPI.subscribe(userId).then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(subscribeSuccess(userId))
+    }
+    dispatch(setSubscribeInProgress(userId, false))
+  })
+}
+
+export const unsubscribe = (userId) => (dispatch) => {
+  dispatch(setSubscribeInProgress(userId, true))
+  usersAPI.unsubscribe(userId).then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(unsubscribeSuccess(userId))
+    }
+    dispatch(setSubscribeInProgress(userId, false))
+  })
+}
