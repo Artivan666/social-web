@@ -3,15 +3,20 @@ import ss from '../../../App.module.css'
 import { Post } from './Post/Post'
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { maxLength, requiredField } from '../../../utils/validators/validators'
+import { Textarea } from '../../common/FormsControls/FormsControls'
+
+const maxLength10 = maxLength(10)
 
 const PostForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit} className={ss.form_style}>
       <div>
         <Field
-          component={'textarea'}
+          component={Textarea}
           name={'message'}
-          placeholder={'New post'}
+          placeholder={'New post message'}
+          validate={[requiredField, maxLength10]}
         />
       </div>
       <div>

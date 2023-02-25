@@ -2,12 +2,21 @@ import s from './Dialogs.module.css'
 import ss from '../../App.module.css'
 import { NavLink } from 'react-router-dom'
 import { Field, reduxForm } from 'redux-form'
+import { Input } from '../common/FormsControls/FormsControls'
+import { maxLength, requiredField } from '../../utils/validators/validators'
+
+const maxLength10 = maxLength(10)
 
 const DialogsForm = (props) => {
   return (
     <form onSubmit={props.handleSubmit} className={ss.form_style}>
       <div>
-        <Field component={'input'} name={'message'} placeholder={'Message'} />
+        <Field
+          component={Input}
+          name={'message'}
+          placeholder={'Message'}
+          validate={[requiredField, maxLength10]}
+        />
       </div>
       <div>
         <button>Send message</button>
