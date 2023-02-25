@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Navigate } from 'react-router-dom'
+import { login } from '../../redux/auth-reducer'
 import { Login } from './Login'
 
 class LoginContainer extends React.Component {
@@ -19,4 +20,4 @@ const mapStateToProps = (state) => ({
   initialization: state.auth.initialization,
 })
 
-export default connect(mapStateToProps, {})(LoginContainer)
+export default connect(mapStateToProps, { login })(LoginContainer)

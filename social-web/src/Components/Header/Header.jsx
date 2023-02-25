@@ -9,7 +9,7 @@ export const Header = (props) => {
     <div className={s.header + ' ' + ss.os}>
       <Logo />
       <Contacts />
-      <Auth isAuth={props.isAuth} login={props.login} />
+      <Auth isAuth={props.isAuth} login={props.login} logout={props.logout} />
     </div>
   )
 }

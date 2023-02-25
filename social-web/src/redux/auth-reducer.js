@@ -17,8 +17,7 @@ export const authReducer = (state = initialState, action) => {
     case SET_USER_DATA:
       return {
         ...state,
-        ...action.userData,
-        isAuth: true,
+        ...action.payload,
       }
 
     case SET_INITIALIZATION:
@@ -34,9 +33,9 @@ export const authReducer = (state = initialState, action) => {
 
 // AC
 
-export const setUserData = (userData) => ({
+export const setUserData = (id, email, login, isAuth) => ({
   type: SET_USER_DATA,
-  userData,
+  payload: { id, email, login, isAuth },
 })
 
 const setInitialization = () => ({
@@ -46,11 +45,26 @@ const setInitialization = () => ({
 // Thunk
 
 export const getUserData = () => (dispatch) => {
-  usersAPI.authMe().then((res) => {
-    if (res.data.resultCode === 0) {
-      dispatch(setUserData(res.data.data))
-    }
+  usersAPI.authMe().then((data) => {
+    const { id, email, login } = data
+    dispatch(setUserData(id, email, login, true))
     // initialization APP
     dispatch(setInitialization())
+  })
+}
+
+export const login = (email, password, rememberMe) => (dispatch) => {
+  usersAPI.login(email, password, rememberMe).then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(getUserData())
+    }
+  })
+}
+
+export const logout = () => (dispatch) => {
+  usersAPI.logout().then((res) => {
+    if (res.data.resultCode === 0) {
+      dispatch(setUserData(null, null, null, false))
+    }
   })
 }

@@ -10,7 +10,11 @@ const instance = axios.create({
 
 export const usersAPI = {
   authMe() {
-    return instance.get(`auth/me`)
+    return instance.get(`auth/me`).then((res) => {
+      if (res.data.resultCode === 0) {
+        return res.data.data
+      }
+    })
   },
 
   getUserProfile(userId) {
@@ -51,5 +55,17 @@ export const usersAPI = {
 
   unsubscribe(userId) {
     return instance.delete(`follow/${userId}`)
+  },
+
+  login(email, password, rememberMe = false) {
+    return instance.post(`auth/login`, {
+      email,
+      password,
+      rememberMe,
+    })
+  },
+
+  logout() {
+    return instance.delete(`auth/login`)
   },
 }
