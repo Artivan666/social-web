@@ -66,6 +66,7 @@ const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   initialization: state.auth.initialization,
   userStatus: state.profilePage.userStatus,
+  authorizedUserId: state.auth.id,
 })
 
 export const ProfileContainer = connect(mapStateToProps, {

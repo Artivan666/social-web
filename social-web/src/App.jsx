@@ -11,26 +11,42 @@ import { UsersContainer } from './Components/Users/UsersContainer'
 import { ProfileContainer } from './Components/Profile/ProfileContainer'
 import { HeaderContainer } from './Components/Header/HeaderContainer'
 import LoginContainer from './Components/Login/LoginContainer'
+import React from 'react'
+import { connect } from 'react-redux'
+import { initializeApp } from './redux/app-reducer'
 
-export const App = (props) => {
-  return (
-    <div className={s.app}>
-      <HeaderContainer />
-      <Sidebar />
-      <div className={s.content}>
-        <Routes>
-          <Route path="" element={<Main />} />
-          <Route path="/login" element={<LoginContainer />} />
-          <Route path="/profile/:userId" element={<ProfileContainer />} />
-          <Route path="/profile" element={<ProfileContainer />} />
-          <Route path="/dialogs/*" element={<DialogsContainer />} />
-          <Route path="/users" element={<UsersContainer />} />
-          <Route path="/video" element={<Video />} />
-          <Route path="/test_page" element={<TestPage />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp()
+  }
+
+  render() {
+    if (!this.props.initialized) return <p>Initializing...</p>
+    return (
+      <div className={s.app}>
+        <HeaderContainer />
+        <Sidebar />
+        <div className={s.content}>
+          <Routes>
+            <Route path="" element={<Main />} />
+            <Route path="/login" element={<LoginContainer />} />
+            <Route path="/profile/:userId" element={<ProfileContainer />} />
+            <Route path="/profile" element={<ProfileContainer />} />
+            <Route path="/dialogs/*" element={<DialogsContainer />} />
+            <Route path="/users" element={<UsersContainer />} />
+            <Route path="/video" element={<Video />} />
+            <Route path="/test_page" element={<TestPage />} />
+            <Route path="*" element={<ErrorPage />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>
-  )
+    )
+  }
 }
+
+const mapStateToProps = (state) => ({
+  initialized: state.app.initialized,
+})
+
+export default connect(mapStateToProps, { initializeApp })(App)

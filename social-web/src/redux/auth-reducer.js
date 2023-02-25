@@ -1,11 +1,9 @@
+import { stopSubmit } from 'redux-form'
 import { usersAPI } from '../api/api'
-
-const SET_INITIALIZATION = 'SET_INITIALIZATION'
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
 const initialState = {
-  initialization: false,
   id: null,
   email: null,
   login: null,
@@ -20,12 +18,6 @@ export const authReducer = (state = initialState, action) => {
         ...action.payload,
       }
 
-    case SET_INITIALIZATION:
-      return {
-        ...state,
-        initialization: true,
-      }
-
     default:
       return state
   }
@@ -38,25 +30,25 @@ export const setUserData = (id, email, login, isAuth) => ({
   payload: { id, email, login, isAuth },
 })
 
-const setInitialization = () => ({
-  type: SET_INITIALIZATION,
-})
-
 // Thunk
 
-export const getUserData = () => (dispatch) => {
-  usersAPI.authMe().then((data) => {
+export const getAuthUserData = () => (dispatch) => {
+  return usersAPI.authMe().then((data) => {
     const { id, email, login } = data
     dispatch(setUserData(id, email, login, true))
-    // initialization APP
-    dispatch(setInitialization())
   })
 }
 
 export const login = (email, password, rememberMe) => (dispatch) => {
   usersAPI.login(email, password, rememberMe).then((res) => {
     if (res.data.resultCode === 0) {
-      dispatch(getUserData())
+      dispatch(getAuthUserData())
+    } else {
+      const message =
+        res.data.messages.length > 0 ? res.data.messages[0] : 'Some error'
+      // let action = stopSubmit('loginForm', { email: 'email is wrong' })
+      let action = stopSubmit('loginForm', { _error: message }) // overall error
+      dispatch(action)
     }
   })
 }
