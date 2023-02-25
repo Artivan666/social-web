@@ -1,23 +1,29 @@
 import s from './Dialogs.module.css'
 import ss from '../../App.module.css'
 import { NavLink } from 'react-router-dom'
-import {
-  addNewMessage,
-  updateNewMessageText,
-} from '../../redux/dialogs-reducer'
+import { Field, reduxForm } from 'redux-form'
+
+const DialogsForm = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit} className={ss.form_style}>
+      <div>
+        <Field component={'input'} name={'message'} placeholder={'Message'} />
+      </div>
+      <div>
+        <button>Send message</button>
+      </div>
+    </form>
+  )
+}
+
+const ReduxDialogsForm = reduxForm({ form: 'dialogsForm' })(DialogsForm)
 
 export const Dialogs = (props) => {
   const setActive = ({ isActive }) => (isActive ? s.active : '')
 
   const dialogs = props.dialogs.map((d) => (
-    <div
-      key={d.id}
-      className={s.item}
-    >
-      <NavLink
-        to={`/dialogs/${d.id}`}
-        className={setActive}
-      >
+    <div key={d.id} className={s.item}>
+      <NavLink to={`/dialogs/${d.id}`} className={setActive}>
         {d.name}
       </NavLink>
     </div>
@@ -25,40 +31,24 @@ export const Dialogs = (props) => {
 
   const messages = props.messages.map((m) => <div key={m.id}>{m.message}</div>)
 
-  const onChangeMessage = (e) => {
-    props.changeMessage(e.target.value)
-  }
+  // const onChangeMessage = (e) => {
+  //   props.changeMessage(e.target.value)
+  // }
 
-  const onSendMessage = () => {
-    props.sendMessage()
-  }
+  // const onSendMessage = () => {
+  //   props.sendMessage()
+  // }
 
-  console.log('render dialogs')
+  const onSubmit = (formData) => {
+    console.log(formData.message)
+    props.addNewMessage(formData.message)
+  }
 
   return (
     <div className={s.dialogs + ' ' + ss.os + ' ' + ss.cp}>
       <p>Dialogs</p>
       <div className={s.newMessageBlock}>
-        <div>
-          <input
-            onChange={(e) => {
-              onChangeMessage(e)
-            }}
-            value={props.newMessageText}
-            type="text"
-            name=""
-            id=""
-          />
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              onSendMessage()
-            }}
-          >
-            Send
-          </button>
-        </div>
+        <ReduxDialogsForm onSubmit={onSubmit} />
       </div>
       <div className={s.messagesList}>
         <div className={s.messagesListBox}>{messages}</div>

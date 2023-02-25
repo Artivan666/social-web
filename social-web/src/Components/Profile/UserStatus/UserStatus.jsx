@@ -27,8 +27,18 @@ export class UserStatus extends React.Component {
     })
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    // для рефакторинга лишних отрисовок
+    if (prevProps.userStatus !== this.props.userStatus) {
+      console.log('component did update')
+      this.setState({
+        userStatus: this.props.userStatus,
+      })
+    }
+  }
+
   componentWillUnmount() {
-    console.log('component is dead')
+    // console.log('component is dead')
   }
 
   render() {
