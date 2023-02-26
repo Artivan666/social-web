@@ -15,10 +15,17 @@ const initialState = {
   currentPage: 1,
   isFetching: false,
   subscribeInProgress: [],
+  fake: 0,
 }
 
 export const usersReducer = (state = initialState, action) => {
   switch (action.type) {
+    case 'FAKE':
+      return {
+        ...state,
+        fake: state.fake + 1,
+      }
+
     case SET_USERS:
       return {
         ...state,

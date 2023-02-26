@@ -7,7 +7,17 @@ import {
 } from '../../redux/users-reducer'
 import { Users } from './Users'
 import React from 'react'
-import { usersAPI } from '../../api/api'
+import {
+  getCurrentPage,
+  getIsFetching,
+  getPageSize,
+  getSubscribeInProgress,
+  getTotalUsersCount,
+  getUsersFromState,
+  getUsersFromStateSelector,
+  getUsersSuper,
+  getUsersSuperSelector,
+} from '../../redux/users-selectors'
 
 class UsersContainerAPI extends React.Component {
   componentDidMount() {
@@ -27,6 +37,7 @@ class UsersContainerAPI extends React.Component {
   }
 
   render() {
+    console.log('render users')
     return (
       <>
         {this.props.isFetching ? <div>Loading...</div> : null}
@@ -41,14 +52,17 @@ class UsersContainerAPI extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  users: state.usersPage.users,
-  pageSize: state.usersPage.pageSize,
-  totalUsersCount: state.usersPage.totalUsersCount,
-  currentPage: state.usersPage.currentPage,
-  isFetching: state.usersPage.isFetching,
-  subscribeInProgress: state.usersPage.subscribeInProgress,
-})
+const mapStateToProps = (state) => {
+  console.log('mapStatetoProps users')
+  return {
+    users: getUsersFromState(state),
+    pageSize: getPageSize(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
+    subscribeInProgress: getSubscribeInProgress(state),
+  }
+}
 
 export const UsersContainer = connect(mapStateToProps, {
   getUsers,

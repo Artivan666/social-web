@@ -3,6 +3,7 @@ import ss from '../../App.module.css'
 import img from '../../img/avatar.jpg'
 import { PostsContainer } from './Posts/PostsContainer'
 import { UserStatus } from './UserStatus/UserStatus'
+import { UserStatusHooks } from './UserStatus/UserStatusHooks'
 
 export const Profile = (props) => {
   return (
@@ -22,7 +23,7 @@ export const Profile = (props) => {
         <b>About me: </b>
         {props.userProfile.aboutMe}
       </div>
-      <UserStatus
+      <UserStatusHooks
         userStatus={props.userStatus}
         updateUserStatus={props.updateUserStatus}
       />

@@ -44,6 +44,7 @@ class ProfileContainerAPI extends React.Component {
   }
 
   render() {
+    console.log('render profile')
     if (this.props.initialization) {
       if (!this.props.isAuth) {
         return <Navigate to="/login" />
@@ -61,13 +62,16 @@ class ProfileContainerAPI extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-  userProfile: state.profilePage.userProfile,
-  isAuth: state.auth.isAuth,
-  initialization: state.auth.initialization,
-  userStatus: state.profilePage.userStatus,
-  authorizedUserId: state.auth.id,
-})
+const mapStateToProps = (state) => {
+  console.log('mapStateToProps profile')
+  return {
+    userProfile: state.profilePage.userProfile,
+    isAuth: state.auth.isAuth,
+    initialization: state.auth.initialization,
+    userStatus: state.profilePage.userStatus,
+    authorizedUserId: state.auth.id,
+  }
+}
 
 export const ProfileContainer = connect(mapStateToProps, {
   getUserProfile,
