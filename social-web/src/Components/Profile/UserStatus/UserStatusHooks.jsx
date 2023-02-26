@@ -1,10 +1,14 @@
 import s from './UserStatus.module.css'
 import ss from '../../../App.module.css'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const UserStatusHooks = (props) => {
   const [editMode, setEditMode] = useState(false)
   const [userStatus, setUserStatus] = useState(props.userStatus)
+
+  useEffect(() => {
+    setUserStatus(props.userStatus)
+  }, [props.userStatus])
 
   const activateEditMode = () => {
     setEditMode(true)
