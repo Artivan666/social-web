@@ -14,13 +14,13 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 
 const rerenderEntireTree = () => {
   root.render(
-    <React.StrictMode>
-      <BrowserRouter>
-        <Provider store={store}>
-          <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
-        </Provider>
-      </BrowserRouter>
-    </React.StrictMode>
+    // <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
+      </Provider>
+    </BrowserRouter>
+    // </React.StrictMode>
   )
 }
 

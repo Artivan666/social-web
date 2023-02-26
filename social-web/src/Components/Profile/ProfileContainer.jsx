@@ -27,7 +27,6 @@ class ProfileContainerAPI extends React.Component {
     if (userId == undefined) {
       userId = 25328
     }
-    console.log(`componentDidMount userId: ${userId}`)
     this.props.getUserProfile(userId)
     this.props.getUserStatus(userId)
   }
@@ -38,17 +37,13 @@ class ProfileContainerAPI extends React.Component {
       if (userId == undefined) {
         userId = 25328
       }
-      console.log(`componentDidUpdate userId: ${userId}`)
       this.props.getUserProfile(userId)
     }
   }
 
   render() {
-    console.log('render profile')
-    if (this.props.initialization) {
-      if (!this.props.isAuth) {
-        return <Navigate to="/login" />
-      }
+    if (!this.props.isAuth) {
+      return <Navigate to="/login" />
     }
 
     if (!this.props.userProfile) return <div>Loading...</div>
@@ -63,7 +58,6 @@ class ProfileContainerAPI extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log('mapStateToProps profile')
   return {
     userProfile: state.profilePage.userProfile,
     isAuth: state.auth.isAuth,

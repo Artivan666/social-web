@@ -1,6 +1,7 @@
 import s from './Users.module.css'
 import ss from '../../App.module.css'
 import { User } from './User/User'
+import { Pagination } from './Pagination/Pagination'
 
 export const Users = (props) => {
   const users = props.users.map((u) => (
@@ -16,33 +17,14 @@ export const Users = (props) => {
     />
   ))
 
-  const pagesCount = Math.ceil(props.totalUsersCount / props.pageSize)
-
-  const pages = []
-
-  for (let i = 1; i <= pagesCount; i++) {
-    pages.push(i)
-  }
-
-  const onChangePage = (pageNumber) => {
-    props.changeCurrentPage(pageNumber)
-  }
-
   return (
     <div className={s.users + ' ' + ss.os + ' ' + ss.cp}>
-      <div>
-        {pages.map((p) => (
-          <button
-            key={p}
-            className={props.currentPage === p ? s.selectedPage : ''}
-            onClick={() => {
-              onChangePage(p)
-            }}
-          >
-            {p}
-          </button>
-        ))}
-      </div>
+      <Pagination
+        totalUsersCount={props.totalUsersCount}
+        pageSize={props.pageSize}
+        currentPage={props.currentPage}
+        changeCurrentPage={props.changeCurrentPage}
+      />
       {users}
     </div>
   )

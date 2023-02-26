@@ -1,36 +1,32 @@
 import s from './Login.module.css'
 import ss from '../../App.module.css'
 import { Field, reduxForm } from 'redux-form'
-import { Input } from '../common/FormsControls/FormsControls'
+import { createField, Input } from '../common/FormsControls/FormsControls'
 import { maxLength, requiredField } from '../../utils/validators/validators'
 
 const maxLength20 = maxLength(20)
 
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
   return (
-    <form onSubmit={props.handleSubmit} className={ss.form_style}>
-      <div>
-        <Field
-          name={'email'}
-          placeholder="Email"
-          component={Input}
-          validate={[requiredField, maxLength20]}
-        />
-      </div>
-      <div>
-        <Field
-          name={'password'}
-          type={'password'}
-          placeholder="Password"
-          component={Input}
-          validate={[requiredField, maxLength20]}
-        />
-      </div>
-      <div>
-        <Field name={'rememberMe'} component={'input'} type={'checkbox'} />
-        Remember me.
-      </div>
-      {props.error && <div className={s.overall_error}>{props.error}</div>}
+    <form onSubmit={handleSubmit} className={ss.form_style}>
+      {createField(Input, 'email', [requiredField, maxLength20], 'Email')}
+      {createField(
+        Input,
+        'password',
+        [requiredField, maxLength20],
+        'Password',
+        { type: 'password' }
+      )}
+      {createField(
+        Input,
+        'rememberMe',
+        null,
+        null,
+        { type: 'checkbox' },
+        'Remember me'
+      )}
+
+      {error && <div className={s.overall_error}>{error}</div>}
       <div>
         <button>Login</button>
       </div>

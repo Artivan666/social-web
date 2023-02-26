@@ -5,19 +5,18 @@ import { login } from '../../redux/auth-reducer'
 import { Login } from './Login'
 
 class LoginContainer extends React.Component {
+  // refactor !!!!!!
   render() {
-    if (this.props.initialization) {
-      if (this.props.isAuth) {
-        return <Navigate to="/profile" />
-      }
+    if (this.props.isAuth) {
+      return <Navigate to="/profile" />
     }
+
     return <Login {...this.props} />
   }
 }
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-  initialization: state.auth.initialization,
 })
 
 export default connect(mapStateToProps, { login })(LoginContainer)
