@@ -57,11 +57,13 @@ export const usersAPI = {
     return instance.delete(`follow/${userId}`)
   },
 
-  login(email, password, rememberMe = false) {
+  login(email, password, rememberMe = false, captcha = null) {
+    debugger
     return instance.post(`auth/login`, {
       email,
       password,
       rememberMe,
+      captcha,
     })
   },
 
@@ -87,6 +89,12 @@ export const usersAPI = {
 
   saveProfile(profile) {
     return instance.put(`/profile`, profile).then((res) => {
+      return res
+    })
+  },
+
+  getCaptchaUrl() {
+    return instance.get(`security/get-captcha-url`).then((res) => {
       return res
     })
   },
