@@ -2,7 +2,7 @@ import s from './TestPage.module.css'
 import ss from '../../App.module.css'
 // import axios from 'axios'
 
-export const TestPage = () => {
+const TestPage = () => {
   // const getData = () => {
   //   axios.get('https://jsonplaceholder.typicode.com/posts').then((res) => {
   //     console.log(res.data)
@@ -24,3 +24,5 @@ export const TestPage = () => {
     </div>
   )
 }
+
+export default TestPage

@@ -68,4 +68,20 @@ export const usersAPI = {
   logout() {
     return instance.delete(`auth/login`)
   },
+
+  savePhoto(userPhoto) {
+    const formData = new FormData()
+    formData.append('image', userPhoto)
+
+    return instance
+      .put(`profile/photo`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      })
+      .then((res) => {
+        debugger
+        return res
+      })
+  },
 }
