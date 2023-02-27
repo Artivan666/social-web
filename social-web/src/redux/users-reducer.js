@@ -14,6 +14,7 @@ const initialState = {
   pageSize: 10,
   totalUsersCount: 0,
   currentPage: 1,
+  portionSize: 10,
   isFetching: false,
   subscribeInProgress: [],
   fake: 0,

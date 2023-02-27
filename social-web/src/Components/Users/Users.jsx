@@ -23,6 +23,7 @@ export const Users = (props) => {
         totalUsersCount={props.totalUsersCount}
         pageSize={props.pageSize}
         currentPage={props.currentPage}
+        portionSize={props.portionSize}
         changeCurrentPage={props.changeCurrentPage}
       />
       {users}
