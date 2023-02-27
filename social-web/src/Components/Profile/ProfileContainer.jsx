@@ -6,6 +6,7 @@ import {
   getUserStatus,
   savePhoto,
   updateUserStatus,
+  saveProfile,
 } from '../../redux/profile-reducer'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Navigate } from 'react-router-dom'
@@ -74,4 +75,5 @@ export const ProfileContainer = connect(mapStateToProps, {
   getUserStatus,
   updateUserStatus,
   savePhoto,
+  saveProfile,
 })(withRouter(ProfileContainerAPI))
