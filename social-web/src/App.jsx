@@ -3,7 +3,7 @@ import { Footer } from './Components/Footer/Footer'
 import { Main } from './Components/Main/Main'
 import { Sidebar } from './Components/Sidebar/Sidebar'
 
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, BrowserRouter } from 'react-router-dom'
 import { ErrorPage } from './Components/ErrorPage/ErrorPage'
 import DialogsContainer from './Components/Dialogs/DialogsContainer'
 import { UsersContainer } from './Components/Users/UsersContainer'
@@ -11,8 +11,9 @@ import { ProfileContainer } from './Components/Profile/ProfileContainer'
 import { HeaderContainer } from './Components/Header/HeaderContainer'
 import LoginContainer from './Components/Login/LoginContainer'
 import React, { lazy, Suspense } from 'react'
-import { connect } from 'react-redux'
+import { connect, Provider } from 'react-redux'
 import { initializeApp } from './redux/app-reducer'
+import store from './redux/store'
 
 // component for lasy loading must export DEFOULT!!!
 const TestPage = lazy(() => import('./Components/TestPage/TestPage'))
@@ -65,4 +66,17 @@ const mapStateToProps = (state) => ({
   initialized: state.app.initialized,
 })
 
-export default connect(mapStateToProps, { initializeApp })(App)
+const AppContainer = connect(mapStateToProps, { initializeApp })(App)
+
+export const MainApp = () => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <AppContainer
+          state={store.getState()}
+          dispatch={store.dispatch.bind(store)}
+        />
+      </Provider>
+    </BrowserRouter>
+  )
+}
